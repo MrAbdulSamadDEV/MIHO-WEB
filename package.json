@@ -1,0 +1,27 @@
+{
+  "name": "miho-landing-page",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MIHO — Cinematic Global AI Landing Page",
+  "scripts": {
+    "dev": "vite --port 5173",
+    "build": "vite build",
+    "preview": "vite preview --port 5173",
+    "test": "python test_suite.py"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^6.1.2",
+    "html5-qrcode": "^2.3.8",
+    "lucide-react": "^1.65.0",
+    "qrcode": "^1.5.4",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "vite": "^8.3.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.1.18"
+  }
+}

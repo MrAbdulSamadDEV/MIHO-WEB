@@ -1,0 +1,362 @@
+import React, { useState, useEffect } from 'react';
+import { X, ExternalLink, ShieldCheck, Mic, Monitor, Smartphone, Terminal, Cpu } from 'lucide-react';
+
+export default function DocModal({ isOpen, onClose }) {
+  const [activeTab, setActiveTab] = useState('getting-started');
+
+  // Close on Escape key press
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  const tabs = [
+    { id: 'getting-started', label: 'Getting Started' },
+    { id: 'voice-engine', label: 'Voice Engine' },
+    { id: 'desktop-actions', label: 'Desktop Actions' },
+    { id: 'security-privacy', label: 'Security & Privacy' },
+    { id: 'remote-pairing', label: 'Remote Pairing' },
+  ];
+
+  return (
+    <div
+      className="modal-overlay"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="doc-modal-title"
+    >
+      <div
+        className="modal-window modal-doc-window"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Top Metallic Border Accent */}
+        <div style={{ height: '2px', width: '100%', background: 'linear-gradient(90deg, transparent, #888, transparent)', opacity: 0.6, flexShrink: 0 }} />
+
+        {/* Clean Modern Header */}
+        <div className="modal-header">
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', width: '100%' }}>
+            <div style={{ minWidth: 0, flex: 1, paddingRight: '4px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '6px' }}>
+                <h3
+                  id="doc-modal-title"
+                  style={{
+                    fontFamily: 'var(--font-heading), Space Grotesk, sans-serif',
+                    fontSize: '22px',
+                    fontWeight: 700,
+                    letterSpacing: '-0.02em',
+                    color: '#ffffff',
+                    margin: 0,
+                    lineHeight: 1.25,
+                    wordBreak: 'break-word',
+                  }}
+                >
+                  MIHO Documentation
+                </h3>
+                <span style={{ fontSize: '10.5px', fontFamily: 'var(--font-body), Inter, sans-serif', color: '#cccccc', backgroundColor: '#141414', border: '1px solid #333333', padding: '3px 7px', textTransform: 'uppercase', letterSpacing: '0.06em', borderRadius: 0, fontWeight: 500 }}>
+                  v1.0 Architecture
+                </span>
+              </div>
+              <p style={{ fontSize: '13px', color: '#999999', margin: 0, lineHeight: 1.5, fontFamily: 'var(--font-body), Inter, sans-serif' }}>
+                Technical architecture reference for MIHO's duplex voice engine, Win32 desktop actions, and security specifications.
+              </p>
+            </div>
+
+            <button
+              onClick={onClose}
+              className="modal-close-btn"
+              aria-label="Close Documentation"
+            >
+              <X style={{ width: '16px', height: '16px' }} />
+            </button>
+          </div>
+        </div>
+
+        {/* Clean Modern Horizontal Tabs Bar */}
+        <div className="modal-tabs-wrapper">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 0', width: 'max-content' }}>
+            {tabs.map((tab) => {
+              const isSelected = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  style={{
+                    padding: '6px 12px',
+                    fontSize: '12.5px',
+                    fontFamily: 'var(--font-body), Inter, sans-serif',
+                    fontWeight: isSelected ? 600 : 500,
+                    whiteSpace: 'nowrap',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease',
+                    backgroundColor: isSelected ? '#ffffff' : '#121212',
+                    color: isSelected ? '#000000' : '#888888',
+                    border: isSelected ? '1px solid #ffffff' : '1px solid #262626',
+                    borderRadius: 0,
+                    flexShrink: 0,
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.color = '#ffffff';
+                      e.currentTarget.style.borderColor = '#444444';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isSelected) {
+                      e.currentTarget.style.color = '#888888';
+                      e.currentTarget.style.borderColor = '#262626';
+                    }
+                  }}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Main Content Viewer with High Spacing & Readability */}
+        <div className="modal-body" style={{ display: 'flex', flexDirection: 'column', gap: '22px', color: '#d4d4d8', fontFamily: 'var(--font-body), Inter, sans-serif' }}>
+          
+          {/* TAB 1: Getting Started */}
+          {activeTab === 'getting-started' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div>
+                <h4 style={{ fontFamily: 'var(--font-heading), Space Grotesk, sans-serif', fontSize: '19px', fontWeight: 700, color: '#ffffff', marginBottom: '6px', letterSpacing: '-0.02em', lineHeight: 1.3 }}>
+                  System Requirements &amp; Architecture
+                </h4>
+                <p style={{ fontSize: '13.5px', color: '#b0b0b0', lineHeight: 1.75, margin: 0 }}>
+                  MIHO is built natively for 64-bit Windows 10 and Windows 11. It executes strictly within unprivileged user space under <code style={{ color: '#ffffff', padding: '2px 5px', backgroundColor: '#181818', border: '1px solid #333333', fontFamily: "'Cascadia Code', Consolas, monospace", fontSize: '12px' }}>%APPDATA%\MIHO</code> and requires zero administrative privileges.
+                </p>
+              </div>
+
+              {/* Quick Start Guide Steps */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div style={{ fontSize: '11px', fontFamily: 'var(--font-body), Inter, sans-serif', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#888888' }}>
+                  Quick Start Installation Guide
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '12px 14px', backgroundColor: '#111111', border: '1px solid #242424', borderRadius: 0 }}>
+                    <span style={{ width: '22px', height: '22px', backgroundColor: '#1c1c1c', border: '1px solid #383838', fontSize: '11px', fontWeight: 700, color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px', borderRadius: 0 }}>
+                      01
+                    </span>
+                    <div style={{ fontSize: '13px', color: '#cccccc', lineHeight: 1.75 }}>
+                      <strong style={{ color: '#ffffff', fontWeight: 600 }}>Download the Windows Package: </strong>
+                      Get the official <code style={{ color: '#10b981', backgroundColor: '#181818', padding: '2px 5px', border: '1px solid #2e2e2e', fontFamily: "'Cascadia Code', Consolas, monospace", fontSize: '12px' }}>MIHO Setup.exe</code> installer or the standalone portable <code style={{ color: '#10b981', backgroundColor: '#181818', padding: '2px 5px', border: '1px solid #2e2e2e', fontFamily: "'Cascadia Code', Consolas, monospace", fontSize: '12px' }}>MIHO.exe</code> from GitHub Releases once published.
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '12px 14px', backgroundColor: '#111111', border: '1px solid #242424', borderRadius: 0 }}>
+                    <span style={{ width: '22px', height: '22px', backgroundColor: '#1c1c1c', border: '1px solid #383838', fontSize: '11px', fontWeight: 700, color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px', borderRadius: 0 }}>
+                      02
+                    </span>
+                    <div style={{ fontSize: '13px', color: '#cccccc', lineHeight: 1.75 }}>
+                      <strong style={{ color: '#ffffff', fontWeight: 600 }}>Zero-Elevation Execution: </strong>
+                      Standard unprivileged user launch ensures strict security guardrails with zero UAC elevation prompts or system registry hooks.
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '12px 14px', backgroundColor: '#111111', border: '1px solid #242424', borderRadius: 0 }}>
+                    <span style={{ width: '22px', height: '22px', backgroundColor: '#1c1c1c', border: '1px solid #383838', fontSize: '11px', fontWeight: 700, color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px', borderRadius: 0 }}>
+                      03
+                    </span>
+                    <div style={{ fontSize: '13px', color: '#cccccc', lineHeight: 1.75 }}>
+                      <strong style={{ color: '#ffffff', fontWeight: 600 }}>Connect Gemini API Key: </strong>
+                      Enter your free Gemini Live key from Google AI Studio. Stored strictly on your local PC via Windows DPAPI hardware encryption.
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '12px 14px', backgroundColor: '#111111', border: '1px solid #242424', borderRadius: 0 }}>
+                    <span style={{ width: '22px', height: '22px', backgroundColor: '#1c1c1c', border: '1px solid #383838', fontSize: '11px', fontWeight: 700, color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px', borderRadius: 0 }}>
+                      04
+                    </span>
+                    <div style={{ fontSize: '13px', color: '#cccccc', lineHeight: 1.75 }}>
+                      <strong style={{ color: '#ffffff', fontWeight: 600 }}>Start Natural Interaction: </strong>
+                      Speak naturally into your microphone or press the global hotkey <kbd style={{ padding: '2px 6px', backgroundColor: '#1e1e1e', border: '1px solid #444444', color: '#ffffff', fontFamily: "'Cascadia Code', Consolas, monospace", fontSize: '11px', borderRadius: 0 }}>Ctrl + Shift + Space</kbd>.
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Default Keyboard Shortcuts */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div style={{ fontSize: '11px', fontFamily: 'var(--font-body), Inter, sans-serif', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#888888' }}>
+                  Default Global Keyboard Shortcuts
+                </div>
+                <div className="modal-grid-2">
+                  <div style={{ padding: '12px 14px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', borderRadius: 0 }}>
+                    <span style={{ fontSize: '13px', color: '#dddddd', fontWeight: 500 }}>Activate Voice Listening</span>
+                    <span style={{ padding: '3px 7px', backgroundColor: '#1e1e1e', color: '#ffffff', border: '1px solid #444444', fontFamily: "'Cascadia Code', Consolas, monospace", fontSize: '11px', borderRadius: 0 }}>
+                      Ctrl + Shift + Space
+                    </span>
+                  </div>
+                  <div style={{ padding: '12px 14px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', borderRadius: 0 }}>
+                    <span style={{ fontSize: '13px', color: '#dddddd', fontWeight: 500 }}>Instant Emergency Stop</span>
+                    <span style={{ padding: '3px 7px', backgroundColor: '#1e1e1e', color: '#ffffff', border: '1px solid #444444', fontFamily: "'Cascadia Code', Consolas, monospace", fontSize: '11px', borderRadius: 0 }}>
+                      Ctrl + Esc
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: Voice Engine */}
+          {activeTab === 'voice-engine' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div>
+                <h4 style={{ fontFamily: 'var(--font-heading), Space Grotesk, sans-serif', fontSize: '19px', fontWeight: 700, color: '#ffffff', marginBottom: '6px', letterSpacing: '-0.02em', lineHeight: 1.3 }}>
+                  Gemini Live Duplex Voice Protocol
+                </h4>
+                <p style={{ fontSize: '13.5px', color: '#b0b0b0', lineHeight: 1.75, margin: 0 }}>
+                  MIHO establishes a direct duplex WebSocket connection with Google Gemini Live models, streaming raw 16kHz PCM audio bidirectionally with sub-second latency and natural conversational interruption.
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div style={{ fontSize: '11px', fontFamily: 'var(--font-body), Inter, sans-serif', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#888888' }}>
+                  Natural Voice Command Examples
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={{ padding: '12px 14px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', flexDirection: 'column', gap: '3px', borderRadius: 0 }}>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#ffffff', lineHeight: 1.4 }}>“MIHO, open terminal and split layout with project docs”</div>
+                    <div style={{ fontSize: '12.5px', color: '#999999', lineHeight: 1.6 }}>Invokes Win32 process spawn and User32 window grid snapping automatically.</div>
+                  </div>
+                  <div style={{ padding: '12px 14px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', flexDirection: 'column', gap: '3px', borderRadius: 0 }}>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#ffffff', lineHeight: 1.4 }}>“Look at the error on my screen and diagnose it”</div>
+                    <div style={{ fontSize: '12.5px', color: '#999999', lineHeight: 1.6 }}>Captures screen frame on demand and feeds multimodal vision pipe for instant diagnosis.</div>
+                  </div>
+                  <div style={{ padding: '12px 14px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', flexDirection: 'column', gap: '3px', borderRadius: 0 }}>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: '#ffffff', lineHeight: 1.4 }}>“Organize all PDFs in Downloads from this week into Archive”</div>
+                    <div style={{ fontSize: '12.5px', color: '#999999', lineHeight: 1.6 }}>Performs safe unprivileged filesystem search and batch movement with audit logging.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: Desktop Actions */}
+          {activeTab === 'desktop-actions' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div>
+                <h4 style={{ fontFamily: 'var(--font-heading), Space Grotesk, sans-serif', fontSize: '19px', fontWeight: 700, color: '#ffffff', marginBottom: '6px', letterSpacing: '-0.02em', lineHeight: 1.3 }}>
+                  Native Win32 Desktop Actions
+                </h4>
+                <p style={{ fontSize: '13.5px', color: '#b0b0b0', lineHeight: 1.75, margin: 0 }}>
+                  Over 50 native desktop actions implemented in Python and TypeScript, invoking official Win32 APIs without requiring administrative elevation.
+                </p>
+              </div>
+
+              <div className="modal-grid-2">
+                <div style={{ padding: '14px 16px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', flexDirection: 'column', gap: '5px', borderRadius: 0 }}>
+                  <h5 style={{ fontSize: '14px', fontWeight: 600, color: '#ffffff', margin: 0 }}>Window Operations</h5>
+                  <p style={{ fontSize: '12.5px', color: '#999999', lineHeight: 1.6, margin: 0 }}>
+                    Focus, minimize, maximize, snap 50/50, and multi-monitor layout management via User32.
+                  </p>
+                </div>
+                <div style={{ padding: '14px 16px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', flexDirection: 'column', gap: '5px', borderRadius: 0 }}>
+                  <h5 style={{ fontSize: '14px', fontWeight: 600, color: '#ffffff', margin: 0 }}>Audio &amp; Volume</h5>
+                  <p style={{ fontSize: '12.5px', color: '#999999', lineHeight: 1.6, margin: 0 }}>
+                    Master volume control, per-application mute, and audio endpoint switching via Windows Core Audio (WASAPI).
+                  </p>
+                </div>
+                <div style={{ padding: '14px 16px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', flexDirection: 'column', gap: '5px', borderRadius: 0 }}>
+                  <h5 style={{ fontSize: '14px', fontWeight: 600, color: '#ffffff', margin: 0 }}>Filesystem Operations</h5>
+                  <p style={{ fontSize: '12.5px', color: '#999999', lineHeight: 1.6, margin: 0 }}>
+                    User profile indexing, metadata search, batch renaming, and automated folder categorization.
+                  </p>
+                </div>
+                <div style={{ padding: '14px 16px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', flexDirection: 'column', gap: '5px', borderRadius: 0 }}>
+                  <h5 style={{ fontSize: '14px', fontWeight: 600, color: '#ffffff', margin: 0 }}>Browser Navigation</h5>
+                  <p style={{ fontSize: '12.5px', color: '#999999', lineHeight: 1.6, margin: 0 }}>
+                    Safe Chrome and Edge tab automation and interaction via standard DevTools Protocol.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 4: Security & Privacy */}
+          {activeTab === 'security-privacy' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div>
+                <h4 style={{ fontFamily: 'var(--font-heading), Space Grotesk, sans-serif', fontSize: '19px', fontWeight: 700, color: '#ffffff', marginBottom: '6px', letterSpacing: '-0.02em', lineHeight: 1.3 }}>
+                  Zero-Admin Security Architecture
+                </h4>
+                <p style={{ fontSize: '13.5px', color: '#b0b0b0', lineHeight: 1.75, margin: 0 }}>
+                  MIHO is built around zero-trust user space boundaries and local-first execution. It never requests administrator privileges.
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div style={{ padding: '14px 16px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', flexDirection: 'column', gap: '4px', borderRadius: 0 }}>
+                  <strong style={{ fontSize: '14px', fontWeight: 600, color: '#ffffff' }}>Windows DPAPI Local Key Encryption:</strong>
+                  <p style={{ fontSize: '12.5px', color: '#999999', lineHeight: 1.7, margin: 0 }}>
+                    API keys and access tokens are encrypted with Windows DPAPI machine keys directly on your physical hardware. Zero cloud credential sync.
+                  </p>
+                </div>
+                <div style={{ padding: '14px 16px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', flexDirection: 'column', gap: '4px', borderRadius: 0 }}>
+                  <strong style={{ fontSize: '14px', fontWeight: 600, color: '#ffffff' }}>Local Audit Logging:</strong>
+                  <p style={{ fontSize: '12.5px', color: '#999999', lineHeight: 1.7, margin: 0 }}>
+                    Every single voice command, invoked action, and tool execution is recorded into local JSONL files inside your user profile for total transparency.
+                  </p>
+                </div>
+                <div style={{ padding: '14px 16px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', flexDirection: 'column', gap: '4px', borderRadius: 0 }}>
+                  <strong style={{ fontSize: '14px', fontWeight: 600, color: '#ffffff' }}>Emergency Killswitch:</strong>
+                  <p style={{ fontSize: '12.5px', color: '#999999', lineHeight: 1.7, margin: 0 }}>
+                    Pressing <kbd style={{ padding: '2px 5px', backgroundColor: '#1e1e1e', border: '1px solid #444444', color: '#ffffff', fontFamily: "'Cascadia Code', Consolas, monospace", fontSize: '11px', borderRadius: 0 }}>Ctrl + Esc</kbd> or disconnecting immediately terminates any running automation sub-process and resets listening state.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 5: Remote Pairing */}
+          {activeTab === 'remote-pairing' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div>
+                <h4 style={{ fontFamily: 'var(--font-heading), Space Grotesk, sans-serif', fontSize: '19px', fontWeight: 700, color: '#ffffff', marginBottom: '6px', letterSpacing: '-0.02em', lineHeight: 1.3 }}>
+                  Mobile Remote Connection
+                </h4>
+                <p style={{ fontSize: '13.5px', color: '#b0b0b0', lineHeight: 1.75, margin: 0 }}>
+                  Connect to your MIHO Windows application securely from your mobile device using encrypted ephemeral token pairing.
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div style={{ padding: '14px 16px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', flexDirection: 'column', gap: '4px', borderRadius: 0 }}>
+                  <strong style={{ fontSize: '14px', fontWeight: 600, color: '#ffffff' }}>1. Ephemeral QR Pairing:</strong>
+                  <p style={{ fontSize: '12.5px', color: '#999999', lineHeight: 1.7, margin: 0 }}>The Windows desktop app generates a short-lived 5-minute single-use pairing token for scan authorization.</p>
+                </div>
+                <div style={{ padding: '14px 16px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', flexDirection: 'column', gap: '4px', borderRadius: 0 }}>
+                  <strong style={{ fontSize: '14px', fontWeight: 600, color: '#ffffff' }}>2. Desktop Owner Approval:</strong>
+                  <p style={{ fontSize: '12.5px', color: '#999999', lineHeight: 1.7, margin: 0 }}>Device identifier and local IP are verified on your desktop monitor before any remote session is established.</p>
+                </div>
+                <div style={{ padding: '14px 16px', backgroundColor: '#111111', border: '1px solid #242424', display: 'flex', flexDirection: 'column', gap: '4px', borderRadius: 0 }}>
+                  <strong style={{ fontSize: '14px', fontWeight: 600, color: '#ffffff' }}>3. Privacy-First Screen Sharing:</strong>
+                  <p style={{ fontSize: '12.5px', color: '#999999', lineHeight: 1.7, margin: 0 }}>Screen streaming defaults to OFF. Live frames are transmitted only when explicitly initiated via the “Share Screen” toggle.</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+        </div>
+
+        {/* Clean Modern Footer */}
+        <div className="modal-footer" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '10px', fontSize: '12px', color: '#888888', fontFamily: 'var(--font-body), Inter, sans-serif' }}>
+          <span>MIHO Open Architecture · Native Windows 10 / 11</span>
+          <span style={{ fontSize: '11.5px', color: '#777777' }}>Press <kbd style={{ padding: '2px 5px', backgroundColor: '#181818', border: '1px solid #333333', color: '#cccccc', fontFamily: 'monospace', borderRadius: 0 }}>Esc</kbd> to close</span>
+        </div>
+      </div>
+    </div>
+  );
+}

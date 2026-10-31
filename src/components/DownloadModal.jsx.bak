@@ -1,0 +1,244 @@
+import React, { useEffect } from 'react';
+import { X, Download, ShieldCheck, ExternalLink, Cpu } from 'lucide-react';
+
+export default function DownloadModal({ isOpen, onClose }) {
+  // Listen for Escape key
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  const RELEASE_URL = "https://github.com/MrAbdulSamadDEV/WINDOWS-AI-VOICE-AGENT/releases";
+  const INSTALLER_URL = "https://github.com/MrAbdulSamadDEV/WINDOWS-AI-VOICE-AGENT/releases/download/v1.0.0/MIHO-Lite-Setup-1.0.0.exe";
+  const PORTABLE_URL = "https://github.com/MrAbdulSamadDEV/WINDOWS-AI-VOICE-AGENT/releases/download/v1.0.0/MIHO-Lite-Portable-1.0.0.exe";
+
+  return (
+    <div
+      className="modal-overlay"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="download-modal-title"
+    >
+      <div
+        className="modal-window"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Top Metallic Border Accent */}
+        <div style={{ height: '2px', width: '100%', background: 'linear-gradient(90deg, transparent, #888, transparent)', opacity: 0.6, flexShrink: 0 }} />
+
+        {/* Modal Header */}
+        <div className="modal-header">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '14px', width: '100%' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '5px 10px', backgroundColor: '#141414', border: '1px solid #303030', fontSize: '11.5px', fontFamily: 'var(--font-body), Inter, sans-serif', fontWeight: 500, color: '#dddddd', minWidth: 0 }}>
+              <span style={{ width: '7px', height: '7px', backgroundColor: '#10b981', display: 'inline-block', flexShrink: 0 }} />
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>v1.0.0 Production Release · Windows</span>
+            </div>
+
+            <button
+              onClick={onClose}
+              style={{
+                width: '32px',
+                height: '32px',
+                border: '1px solid #333333',
+                backgroundColor: '#141414',
+                color: '#aaaaaa',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                flexShrink: 0,
+                borderRadius: 0,
+                transition: 'all 0.15s ease',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = '#666666'; e.currentTarget.style.backgroundColor = '#202020'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#aaaaaa'; e.currentTarget.style.borderColor = '#333333'; e.currentTarget.style.backgroundColor = '#141414'; }}
+              aria-label="Close modal"
+            >
+              <X style={{ width: '16px', height: '16px' }} />
+            </button>
+          </div>
+
+          <h3
+            id="download-modal-title"
+            style={{
+              fontFamily: 'var(--font-heading), Space Grotesk, sans-serif',
+              fontSize: '26px',
+              fontWeight: 700,
+              letterSpacing: '-0.02em',
+              color: '#ffffff',
+              lineHeight: 1.25,
+              margin: '0 0 8px 0',
+              wordBreak: 'break-word',
+            }}
+          >
+            Get MIHO for Windows
+          </h3>
+          <p style={{ fontSize: '14.5px', color: '#a0a0a0', lineHeight: 1.6, margin: 0, fontFamily: 'var(--font-body), Inter, sans-serif' }}>
+            Autonomous desktop intelligence and duplex voice engine powered by Google Gemini Live.
+          </p>
+        </div>
+
+        {/* Modal Body with High Readability & Generous Spacing */}
+        <div className="modal-body" style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+          
+          {/* Main Primary Download Card */}
+          <a
+            href={INSTALLER_URL}
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '16px 20px',
+              backgroundColor: '#ffffff',
+              color: '#000000',
+              border: '1px solid #ffffff',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              boxShadow: '0 4px 25px rgba(255, 255, 255, 0.12)',
+              transition: 'background-color 0.15s ease',
+              borderRadius: 0,
+              flexWrap: 'wrap',
+              gap: '12px',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#e8e8e8'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#ffffff'; }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', minWidth: 0, flex: 1 }}>
+              <div style={{ width: '42px', height: '42px', backgroundColor: '#000000', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, borderRadius: 0 }}>
+                <Download style={{ width: '20px', height: '20px' }} />
+              </div>
+              <div style={{ minWidth: 0, textAlign: 'left' }}>
+                <div style={{ fontFamily: 'var(--font-heading), Space Grotesk, sans-serif', fontSize: '17px', fontWeight: 700, color: '#000000', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
+                  Download MIHO Installer (.exe)
+                </div>
+                <div style={{ fontSize: '12.5px', fontFamily: 'var(--font-body), Inter, sans-serif', color: '#555555', marginTop: '3px', lineHeight: 1.4 }}>
+                  Windows 10 / 11 (64-bit) · 114 MB · Zero-UAC NSIS Package
+                </div>
+              </div>
+            </div>
+            <span style={{ flexShrink: 0, fontSize: '11.5px', fontFamily: 'var(--font-body), Inter, sans-serif', fontWeight: 700, letterSpacing: '0.08em', padding: '9px 16px', backgroundColor: '#000000', color: '#ffffff', borderRadius: 0 }}>
+              DOWNLOAD .EXE
+            </span>
+          </a>
+
+          {/* Secondary Release Options */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px', fontSize: '13px', fontFamily: 'var(--font-body), Inter, sans-serif' }}>
+            <a
+              href={PORTABLE_URL}
+              target="_blank"
+              rel="noreferrer"
+              style={{ color: '#b0b0b0', display: 'flex', alignItems: 'center', gap: '7px', textDecoration: 'none', transition: 'color 0.15s' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#ffffff'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#b0b0b0'; }}
+            >
+              <Cpu style={{ width: '15px', height: '15px', color: '#888888', flexShrink: 0 }} />
+              <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>Download Portable Standalone (.exe)</span>
+            </a>
+            <a
+              href={RELEASE_URL}
+              target="_blank"
+              rel="noreferrer"
+              style={{ color: '#b0b0b0', display: 'flex', alignItems: 'center', gap: '6px', textDecoration: 'none', transition: 'color 0.15s' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#ffffff'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#b0b0b0'; }}
+            >
+              <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>View All GitHub Releases</span>
+              <ExternalLink style={{ width: '13px', height: '13px', color: '#888888', flexShrink: 0 }} />
+            </a>
+          </div>
+
+          {/* System Requirements & Security Specifications */}
+          <div style={{ backgroundColor: '#111111', border: '1px solid #282828', padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: '14px', borderRadius: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14.5px', fontWeight: 600, color: '#ffffff', fontFamily: 'var(--font-heading), Space Grotesk, sans-serif' }}>
+              <ShieldCheck style={{ width: '18px', height: '18px', color: '#10b981', flexShrink: 0 }} />
+              <span>Zero-Administrator User Space Architecture</span>
+            </div>
+
+            <p style={{ fontSize: '13.5px', color: '#cccccc', lineHeight: 1.75, margin: 0, fontFamily: 'var(--font-body), Inter, sans-serif' }}>
+              MIHO runs entirely in standard user space under <code style={{ color: '#ffffff', padding: '2px 6px', backgroundColor: '#1c1c1c', border: '1px solid #383838', fontFamily: "'Cascadia Code', Consolas, monospace", fontSize: '12px' }}>%APPDATA%\MIHO</code>. It never requests administrator elevation, installs kernel drivers, or modifies system registry keys.
+            </p>
+
+            <div className="modal-grid-2" style={{ paddingTop: '14px', borderTop: '1px solid #222222', gap: '14px' }}>
+              <div>
+                <span style={{ color: '#888888', display: 'block', fontSize: '11px', fontFamily: 'var(--font-body), Inter, sans-serif', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '3px' }}>Operating System</span>
+                <span style={{ color: '#ffffff', fontSize: '13.5px', fontWeight: 500, fontFamily: 'var(--font-body), Inter, sans-serif' }}>Windows 10 / 11 (64-bit Native)</span>
+              </div>
+              <div>
+                <span style={{ color: '#888888', display: 'block', fontSize: '11px', fontFamily: 'var(--font-body), Inter, sans-serif', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '3px' }}>Credential Vault</span>
+                <span style={{ color: '#ffffff', fontSize: '13.5px', fontWeight: 500, fontFamily: 'var(--font-body), Inter, sans-serif' }}>Windows DPAPI Local Encryption</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 3 Simple Setup Steps */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <div style={{ fontSize: '11.5px', fontFamily: 'var(--font-body), Inter, sans-serif', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#888888' }}>
+              Quick Setup in 3 Simple Steps
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              
+              {/* Step 1 */}
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '12px 14px', backgroundColor: '#0f0f0f', border: '1px solid #222222', borderRadius: 0 }}>
+                <span style={{ width: '24px', height: '24px', backgroundColor: '#1a1a1a', border: '1px solid #383838', fontSize: '11.5px', fontFamily: 'var(--font-body), Inter, sans-serif', fontWeight: 700, color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px', borderRadius: 0 }}>
+                  01
+                </span>
+                <div style={{ fontSize: '13.5px', color: '#cccccc', lineHeight: 1.75, fontFamily: 'var(--font-body), Inter, sans-serif' }}>
+                  <strong style={{ color: '#ffffff', fontWeight: 600 }}>Run the Installer: </strong>
+                  Launch <code style={{ color: '#ffffff', padding: '2px 5px', backgroundColor: '#1a1a1a', border: '1px solid #333333', fontFamily: "'Cascadia Code', Consolas, monospace", fontSize: '12px' }}>MIHO-Lite-Setup-1.0.0.exe</code>. Standard user launch with zero UAC elevation prompts.
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '12px 14px', backgroundColor: '#0f0f0f', border: '1px solid #222222', borderRadius: 0 }}>
+                <span style={{ width: '24px', height: '24px', backgroundColor: '#1a1a1a', border: '1px solid #383838', fontSize: '11.5px', fontFamily: 'var(--font-body), Inter, sans-serif', fontWeight: 700, color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px', borderRadius: 0 }}>
+                  02
+                </span>
+                <div style={{ fontSize: '13.5px', color: '#cccccc', lineHeight: 1.75, fontFamily: 'var(--font-body), Inter, sans-serif' }}>
+                  <strong style={{ color: '#ffffff', fontWeight: 600 }}>Connect Gemini API Key: </strong>
+                  Enter your free Gemini API key from{' '}
+                  <a
+                    href="https://aistudio.google.com/apikey"
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ color: '#ffffff', textDecoration: 'underline', textUnderlineOffset: '3px', fontWeight: 600 }}
+                  >
+                    Google AI Studio
+                  </a>. Stored strictly on your local PC via Windows DPAPI hardware encryption.
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', padding: '12px 14px', backgroundColor: '#0f0f0f', border: '1px solid #222222', borderRadius: 0 }}>
+                <span style={{ width: '24px', height: '24px', backgroundColor: '#1a1a1a', border: '1px solid #383838', fontSize: '11.5px', fontFamily: 'var(--font-body), Inter, sans-serif', fontWeight: 700, color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px', borderRadius: 0 }}>
+                  03
+                </span>
+                <div style={{ fontSize: '13.5px', color: '#cccccc', lineHeight: 1.75, fontFamily: 'var(--font-body), Inter, sans-serif' }}>
+                  <strong style={{ color: '#ffffff', fontWeight: 600 }}>Start Interacting: </strong>
+                  Press <kbd style={{ padding: '2px 7px', backgroundColor: '#1e1e1e', border: '1px solid #444444', color: '#ffffff', fontFamily: "'Cascadia Code', Consolas, monospace", fontSize: '11.5px', borderRadius: 0 }}>Ctrl + Shift + Space</kbd> to activate the duplex voice engine and autonomous desktop control.
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        {/* Modal Footer */}
+        <div className="modal-footer" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '10px', fontSize: '12.5px', color: '#888888', fontFamily: 'var(--font-body), Inter, sans-serif' }}>
+          <span>Created &amp; Developed by Abdul Samad · MIHO v1.0.0</span>
+          <span style={{ fontSize: '12px', color: '#777777' }}>Press <kbd style={{ padding: '2px 5px', backgroundColor: '#181818', border: '1px solid #333333', color: '#cccccc', fontFamily: 'monospace', borderRadius: 0 }}>Esc</kbd> to close</span>
+        </div>
+      </div>
+    </div>
+  );
+}
